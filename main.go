@@ -1,32 +1,29 @@
 package main
 
 import (
-	"clean-architecture/config"
 	"clean-architecture/controllers"
-	"clean-architecture/infrastructure/database"
+	"clean-architecture/infrastructure/config"
 	"clean-architecture/infrastructure/http"
 	"clean-architecture/models"
 	"clean-architecture/repositories"
-
-	"github.com/spf13/viper"
 )
 
 func main() {
-	var err error
-	if err = config.Load(); err != nil {
+	cfg := config.New()
+	if err := cfg.Load(); err != nil {
 		panic(err)
 	}
 
-	db, err := database.NewDatabase(
-		viper.GetString(config.DatabaseDriverConfigKey),
-		viper.GetString(config.DatabaseDataSourceConfigKey),
-	)
+	repository, err := repositories.NewRepository(cfg)
 	if err != nil {
 		panic(err)
 	}
 
-	if err = http.New(viper.GetInt(config.HttpPortConfigKey)).
-		WithController(controllers.NewController(models.NewModel(repositories.NewRepository(db)))).
+	controller := controllers.NewController(models.NewModel(repository))
+
+	if err = http.
+		New(cfg.Http.Port).
+		WithController(controller).
 		Start(); err != nil {
 		panic(err)
 	}

@@ -1,4 +1,4 @@
-package database
+package postgres
 
 import (
 	"database/sql"
@@ -7,6 +7,6 @@ import (
 	_ "github.com/lib/pq"              // postgres driver
 )
 
-func NewDatabase(driver, dataSource string) (db *sql.DB, err error) {
+func NewConnection(driver, dataSource string) (db *sql.DB, err error) {
 	return sql.Open(driver, dataSource)
 }

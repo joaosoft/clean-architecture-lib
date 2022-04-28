@@ -1,10 +1,11 @@
 package routes
 
 import (
+	"clean-architecture/controllers/middlewares"
 	"clean-architecture/domain"
-	"clean-architecture/infrastructure/http/middlewares"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func Register(router *gin.Engine, controller domain.IController) {

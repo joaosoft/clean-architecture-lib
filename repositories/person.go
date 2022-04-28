@@ -2,19 +2,31 @@ package repositories
 
 import (
 	"clean-architecture/domain"
+	"clean-architecture/infrastructure/config"
+	"clean-architecture/infrastructure/database/postgres"
 	"context"
 	"database/sql"
 	"fmt"
 )
 
 type Repository struct {
-	db *sql.DB
+	configs *config.Config
+	db      *sql.DB
 }
 
-func NewRepository(db *sql.DB) domain.IRepository {
+func NewRepository(config *config.Config) (domain.IRepository, error) {
+	db, err := postgres.NewConnection(
+		config.Database.Driver,
+		config.Database.DataSource,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
 	return &Repository{
 		db: db,
-	}
+	}, nil
 }
 
 func (r *Repository) GetPersonByID(ctx context.Context, personID string) (*domain.Person, error) {
