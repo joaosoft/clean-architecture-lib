@@ -1,6 +1,7 @@
 package main
 
 import (
+	"clean-architecture/config"
 	"clean-architecture/controllers"
 	"clean-architecture/infrastructure/database"
 	"clean-architecture/infrastructure/http"
@@ -12,23 +13,21 @@ import (
 
 func main() {
 	var err error
-	if err = loadConfigs(); err != nil {
+	if err = config.Load(); err != nil {
 		panic(err)
 	}
 
-	db, err := database.NewDatabase()
+	db, err := database.NewDatabase(
+		viper.GetString(config.DatabaseDriverConfigKey),
+		viper.GetString(config.DatabaseDataSourceConfigKey),
+	)
 	if err != nil {
 		panic(err)
 	}
 
-	if err = http.New(viper.GetInt("http_port")).
+	if err = http.New(viper.GetInt(config.HttpPortConfigKey)).
 		WithController(controllers.NewController(models.NewModel(repositories.NewRepository(db)))).
 		Start(); err != nil {
 		panic(err)
 	}
-}
-
-func loadConfigs() error {
-	viper.AddConfigPath("./config")
-	return viper.ReadInConfig()
 }

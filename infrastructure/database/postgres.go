@@ -7,6 +7,6 @@ import (
 	_ "github.com/lib/pq"              // postgres driver
 )
 
-func NewDatabase() (db *sql.DB, err error) {
-	return sql.Open("postgres", "postgres://foursource:password@localhost:5432?sslmode=disable")
+func NewDatabase(driver, dataSource string) (db *sql.DB, err error) {
+	return sql.Open(driver, dataSource)
 }
