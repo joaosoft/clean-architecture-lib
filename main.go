@@ -2,15 +2,15 @@ package main
 
 import (
 	"clean-architecture/controllers"
-	"clean-architecture/infrastructure/config"
+	"clean-architecture/infrastructure/config/viper"
 	"clean-architecture/infrastructure/http"
 	"clean-architecture/models"
 	"clean-architecture/repositories"
 )
 
 func main() {
-	cfg := config.New()
-	if err := cfg.Load(); err != nil {
+	cfg, err := viper.Load()
+	if err != nil {
 		panic(err)
 	}
 
