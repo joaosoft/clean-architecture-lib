@@ -1,4 +1,4 @@
-package controllers
+package http
 
 type ErrorResponse struct {
 	Code    int    `json:"code"`

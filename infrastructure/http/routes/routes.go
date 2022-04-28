@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"clean-architecture/controllers/middlewares"
+	"clean-architecture/controllers/http/middlewares"
 	"clean-architecture/domain"
 	"net/http"
 
