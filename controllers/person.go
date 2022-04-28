@@ -1,21 +1,17 @@
 package controllers
 
 import (
-	"clean-architecture/models"
+	"clean-architecture/domain"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-type IController interface {
-	GetPersonByID(ctx *gin.Context)
-}
-
 type Controller struct {
-	model models.IModel
+	model domain.IModel
 }
 
-func NewController(model models.IModel) IController {
+func NewController(model domain.IModel) domain.IController {
 	return &Controller{
 		model: model,
 	}
@@ -28,7 +24,7 @@ func (c *Controller) GetPersonByID(ctx *gin.Context) {
 
 	ctx.Header("Content-Type", "application/json")
 
-	person, err := c.model.GetPersonByID(ctx, request.IdPerson)
+	person, err := c.model.GetPersonByID(ctx.Request.Context(), request.IdPerson)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError,
 			ErrorResponse{

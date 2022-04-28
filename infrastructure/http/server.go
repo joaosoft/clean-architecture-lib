@@ -1,7 +1,7 @@
 package http
 
 import (
-	"clean-architecture/controllers"
+	"clean-architecture/domain"
 	"clean-architecture/routes"
 	"context"
 	"fmt"
@@ -11,7 +11,7 @@ import (
 )
 
 type IServer interface {
-	WithController(controller controllers.IController) *Server
+	WithController(controller domain.IController) *Server
 	Start() error
 	Stop() error
 }
@@ -20,7 +20,7 @@ type Server struct {
 	App        *http.Server
 	Router     *gin.Engine
 	Port       int
-	controller controllers.IController
+	controller domain.IController
 }
 
 func New(port int) IServer {
@@ -41,7 +41,7 @@ func New(port int) IServer {
 	return server
 }
 
-func (s *Server) WithController(controller controllers.IController) *Server {
+func (s *Server) WithController(controller domain.IController) *Server {
 	s.controller = controller
 	return s
 }

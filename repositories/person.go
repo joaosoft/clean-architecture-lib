@@ -7,15 +7,11 @@ import (
 	"fmt"
 )
 
-type IRepository interface {
-	GetPersonByID(ctx context.Context, personID string) (*domain.Person, error)
-}
-
 type Repository struct {
 	db *sql.DB
 }
 
-func NewRepository(db *sql.DB) IRepository {
+func NewRepository(db *sql.DB) domain.IRepository {
 	return &Repository{
 		db: db,
 	}

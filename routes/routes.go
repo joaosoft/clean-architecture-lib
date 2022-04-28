@@ -1,14 +1,14 @@
 package routes
 
 import (
-	"clean-architecture/controllers"
+	"clean-architecture/domain"
 	"clean-architecture/middlewares"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-func Register(router *gin.Engine, controller controllers.IController) {
+func Register(router *gin.Engine, controller domain.IController) {
 	v1 := router.Group("/v1")
 	v1.Use(
 		middlewares.PrintRequest,

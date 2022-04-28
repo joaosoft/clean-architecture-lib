@@ -2,19 +2,14 @@ package models
 
 import (
 	"clean-architecture/domain"
-	"clean-architecture/repositories"
 	"context"
 )
 
-type IModel interface {
-	GetPersonByID(ctx context.Context, personID string) (*domain.Person, error)
-}
-
 type Model struct {
-	repository repositories.IRepository
+	repository domain.IRepository
 }
 
-func NewModel(repository repositories.IRepository) IModel {
+func NewModel(repository domain.IRepository) domain.IModel {
 	return &Model{
 		repository: repository,
 	}
