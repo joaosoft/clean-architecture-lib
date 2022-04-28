@@ -17,10 +17,9 @@ type IServer interface {
 }
 
 type Server struct {
-	App        *http.Server
-	Router     *gin.Engine
-	Port       int
-	controller domain.IController
+	App    *http.Server
+	Router *gin.Engine
+	Port   int
 }
 
 func New(port int) IServer {
@@ -42,12 +41,11 @@ func New(port int) IServer {
 }
 
 func (s *Server) WithController(controller domain.IController) *Server {
-	s.controller = controller
+	routes.Register(s.Router, controller)
 	return s
 }
 
 func (s *Server) Start() (err error) {
-	routes.Register(s.Router, s.controller)
 	return s.App.ListenAndServe()
 }
 
