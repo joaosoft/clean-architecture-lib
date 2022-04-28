@@ -1,8 +1,8 @@
-package routes
+package http
 
 import (
 	"clean-architecture/controllers/http/middlewares"
-	"clean-architecture/domain"
+	domain "clean-architecture/domain/person"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

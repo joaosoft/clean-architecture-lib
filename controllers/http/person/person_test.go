@@ -1,9 +1,9 @@
-package http
+package person
 
 import (
-	"clean-architecture/domain"
-	"clean-architecture/infrastructure/http/routes"
-	"clean-architecture/models"
+	routes "clean-architecture/api/http"
+	domain "clean-architecture/domain/person"
+	models "clean-architecture/models/person"
 	"context"
 	"encoding/json"
 	"fmt"

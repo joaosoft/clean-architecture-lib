@@ -1,7 +1,8 @@
-package http
+package person
 
 import (
-	"clean-architecture/domain"
+	"clean-architecture/controllers/structs"
+	domain "clean-architecture/domain/person"
 	"net/http"
 	"strconv"
 	"strings"
@@ -24,7 +25,7 @@ func (c *Controller) GetPersonByID(ctx *gin.Context) {
 	ctx.Header("Content-Type", "application/json")
 
 	personID, _ := strconv.Atoi(ctx.Param("id_person"))
-	request := GetPersonByIDRequest{
+	request := structs.GetPersonByIDRequest{
 		IdPerson: personID,
 	}
 
@@ -35,7 +36,7 @@ func (c *Controller) GetPersonByID(ctx *gin.Context) {
 		}
 
 		ctx.JSON(http.StatusBadRequest,
-			ErrorResponse{
+			structs.ErrorResponse{
 				Code:    http.StatusBadRequest,
 				Message: strings.Join(errMessages, ", "),
 			})
@@ -45,7 +46,7 @@ func (c *Controller) GetPersonByID(ctx *gin.Context) {
 	person, err := c.model.GetPersonByID(ctx.Request.Context(), request.IdPerson)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError,
-			ErrorResponse{
+			structs.ErrorResponse{
 				Code:    http.StatusInternalServerError,
 				Message: err.Error(),
 			})

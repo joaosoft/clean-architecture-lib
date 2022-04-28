@@ -1,8 +1,8 @@
 package http
 
 import (
-	"clean-architecture/domain"
-	"clean-architecture/infrastructure/http/routes"
+	routes "clean-architecture/api/http"
+	domain "clean-architecture/domain/person"
 	"context"
 	"fmt"
 	"net/http"

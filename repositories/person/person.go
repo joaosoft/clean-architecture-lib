@@ -1,7 +1,7 @@
-package repositories
+package person
 
 import (
-	"clean-architecture/domain"
+	domain "clean-architecture/domain/person"
 	"clean-architecture/infrastructure/config"
 	"clean-architecture/infrastructure/database/postgres"
 	"context"

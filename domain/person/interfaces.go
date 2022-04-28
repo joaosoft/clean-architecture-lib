@@ -1,4 +1,4 @@
-package domain
+package person
 
 import (
 	"context"
@@ -16,9 +16,4 @@ type IModel interface {
 
 type IRepository interface {
 	GetPersonByID(ctx context.Context, personID int) (*Person, error)
-}
-
-type Person struct {
-	Id   int    `json:"id"`
-	Name string `json:"name"`
 }

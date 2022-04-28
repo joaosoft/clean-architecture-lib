@@ -1,12 +1,12 @@
 package main
 
 import (
-	controllers "clean-architecture/controllers/http"
+	controllers "clean-architecture/controllers/http/person"
 	_ "clean-architecture/infrastructure"
 	"clean-architecture/infrastructure/config/viper"
 	"clean-architecture/infrastructure/http"
-	"clean-architecture/models"
-	"clean-architecture/repositories"
+	models "clean-architecture/models/person"
+	repositories "clean-architecture/repositories/person"
 )
 
 func main() {

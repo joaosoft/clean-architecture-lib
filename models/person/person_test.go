@@ -1,8 +1,8 @@
-package models
+package person
 
 import (
-	"clean-architecture/domain"
-	"clean-architecture/repositories"
+	domain "clean-architecture/domain/person"
+	repositories "clean-architecture/repositories/person"
 	"context"
 	"testing"
 

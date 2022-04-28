@@ -1,4 +1,4 @@
-package http
+package structs
 
 type ErrorResponse struct {
 	Code    int    `json:"code"`
