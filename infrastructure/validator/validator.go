@@ -1,7 +1,12 @@
 package validator
 
-import "github.com/joaosoft/validator"
+import (
+	"clean-architecture/controllers/validators"
 
-func init() {
-	validator.SetValidateAll(true)
+	"github.com/joaosoft/validator"
+)
+
+func InitValidator() {
+	validator.SetValidateAll(true).
+		AddCallback("checkPerson", validators.CheckPerson)
 }

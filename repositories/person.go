@@ -38,7 +38,7 @@ func (r *Repository) GetPersonByID(ctx context.Context, personID int) (*domain.P
 
 	if err := row.Scan(&person.Name); err != nil {
 		if err == sql.ErrNoRows {
-			return nil, fmt.Errorf("no person found with id '%s'", personID)
+			return nil, fmt.Errorf("no person found with id '%d'", personID)
 		}
 
 		return nil, err

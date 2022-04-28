@@ -2,6 +2,7 @@ package main
 
 import (
 	"clean-architecture/controllers"
+	_ "clean-architecture/infrastructure"
 	"clean-architecture/infrastructure/config/viper"
 	"clean-architecture/infrastructure/http"
 	"clean-architecture/models"

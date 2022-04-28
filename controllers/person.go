@@ -4,6 +4,7 @@ import (
 	"clean-architecture/domain"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joaosoft/validator"
@@ -20,21 +21,26 @@ func NewController(model domain.IModel) domain.IController {
 }
 
 func (c *Controller) GetPersonByID(ctx *gin.Context) {
+	ctx.Header("Content-Type", "application/json")
+
 	personID, _ := strconv.Atoi(ctx.Param("id_person"))
 	request := GetPersonByIDRequest{
 		IdPerson: personID,
 	}
 
 	if errs := validator.Validate(request); len(errs) > 0 {
+		var errMessages []string
+		for _, err := range errs {
+			errMessages = append(errMessages, err.Error())
+		}
+
 		ctx.JSON(http.StatusBadRequest,
 			ErrorResponse{
 				Code:    http.StatusBadRequest,
-				Message: errs[0].Error(),
+				Message: strings.Join(errMessages, ", "),
 			})
 		return
 	}
-
-	ctx.Header("Content-Type", "application/json")
 
 	person, err := c.model.GetPersonByID(ctx.Request.Context(), request.IdPerson)
 	if err != nil {
