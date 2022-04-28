@@ -2,7 +2,7 @@ package http
 
 import (
 	"clean-architecture/domain"
-	"clean-architecture/routes"
+	"clean-architecture/infrastructure/http/routes"
 	"context"
 	"fmt"
 	"net/http"
