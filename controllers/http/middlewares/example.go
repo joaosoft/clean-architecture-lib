@@ -10,7 +10,7 @@ import (
 func CheckExample(ctx *gin.Context) {
 	// do something
 	<-time.After(time.Millisecond * 10)
-	fmt.Println("this is an middleware example running...")
+	fmt.Println("this is a middleware example running...")
 
 	ctx.Next()
 }
