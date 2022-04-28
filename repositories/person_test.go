@@ -12,7 +12,7 @@ import (
 )
 
 func TestGetPersonByID(t *testing.T) {
-	personID := "123"
+	personID := 123
 	expected := &domain.Person{
 		Id:   personID,
 		Name: "João Ribeiro",
@@ -25,7 +25,8 @@ func TestGetPersonByID(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 
 	defer db.Close()
-	repository := NewRepository(db)
+	repository, err := NewRepository(nil, db)
+	assert.Nil(t, err)
 
 	mock.ExpectQuery(query).WithArgs(personID).WillReturnRows(rows)
 

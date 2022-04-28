@@ -2,9 +2,9 @@ package controllers
 
 import (
 	"clean-architecture/domain"
+	"clean-architecture/infrastructure/http/routes"
 	"clean-architecture/models"
-	"clean-architecture/repositories"
-	"clean-architecture/routes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -17,7 +17,7 @@ import (
 )
 
 func TestGetPersonByID(t *testing.T) {
-	personID := "123"
+	personID := 123
 	expected := &domain.Person{
 		Id:   personID,
 		Name: "João Ribeiro",
@@ -26,12 +26,12 @@ func TestGetPersonByID(t *testing.T) {
 	w := httptest.NewRecorder()
 	ctx, engine := gin.CreateTestContext(w)
 	var err error
-	ctx.Request, err = http.NewRequest(http.MethodGet, fmt.Sprintf("/v1/persons/%s", personID), nil)
+	ctx.Request, err = http.NewRequest(http.MethodGet, fmt.Sprintf("/v1/persons/%d", personID), nil)
 
-	repository := repositories.NewRepositoryMock()
-	repository.On("GetPersonByID", ctx.Request.Context(), personID).Return(expected, nil)
-	controller := NewController(models.NewModel(repository))
+	model := models.NewModelMock()
+	model.On("GetPersonByID", context.Background(), personID).Return(expected, nil)
 
+	controller := NewController(model)
 	routes.Register(engine, controller)
 
 	assert.Nil(t, err)

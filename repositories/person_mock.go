@@ -15,7 +15,7 @@ type RepositoryMock struct {
 	mock.Mock
 }
 
-func (r *RepositoryMock) GetPersonByID(ctx context.Context, personID string) (*domain.Person, error) {
+func (r *RepositoryMock) GetPersonByID(ctx context.Context, personID int) (*domain.Person, error) {
 	args := r.Called(ctx, personID)
 	return args.Get(0).(*domain.Person), args.Error(1)
 }

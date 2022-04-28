@@ -10,7 +10,7 @@ import (
 )
 
 func TestGetPersonByID(t *testing.T) {
-	personID := "123"
+	personID := 123
 	expected := &domain.Person{
 		Id:   personID,
 		Name: "João Ribeiro",

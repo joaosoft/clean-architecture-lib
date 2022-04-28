@@ -14,18 +14,23 @@ type Repository struct {
 	db      *sql.DB
 }
 
-func NewRepository(config *config.Config) (domain.IRepository, error) {
-	db, err := postgres.NewConnection(
-		config.Database.Driver,
-		config.Database.DataSource,
-	)
+func NewRepository(config *config.Config, db ...*sql.DB) (_ domain.IRepository, err error) {
+	var conn *sql.DB
+	if len(db) > 0 {
+		conn = db[0]
+	} else {
+		conn, err = postgres.NewConnection(
+			config.Database.Driver,
+			config.Database.DataSource,
+		)
+	}
 
 	if err != nil {
 		return nil, err
 	}
 
 	return &Repository{
-		db: db,
+		db: conn,
 	}, nil
 }
 
