@@ -1,5 +1,5 @@
 package controllers
 
 type GetPersonByIDRequest struct {
-	IdPerson string `json:"id_person"`
+	IdPerson int `json:"id_person" validate:"not-empty, min=0"`
 }

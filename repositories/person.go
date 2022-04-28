@@ -29,7 +29,7 @@ func NewRepository(config *config.Config) (domain.IRepository, error) {
 	}, nil
 }
 
-func (r *Repository) GetPersonByID(ctx context.Context, personID string) (*domain.Person, error) {
+func (r *Repository) GetPersonByID(ctx context.Context, personID int) (*domain.Person, error) {
 	row := r.db.QueryRow("SELECT first_name || ' ' || last_name FROM auth.users WHERE id_users = $1", personID)
 
 	person := &domain.Person{

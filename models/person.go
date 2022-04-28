@@ -15,6 +15,6 @@ func NewModel(repository domain.IRepository) domain.IModel {
 	}
 }
 
-func (r *Model) GetPersonByID(ctx context.Context, personID string) (*domain.Person, error) {
+func (r *Model) GetPersonByID(ctx context.Context, personID int) (*domain.Person, error) {
 	return r.repository.GetPersonByID(ctx, personID)
 }
