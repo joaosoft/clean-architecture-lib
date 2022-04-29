@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func CheckExample(app *domain.App) func(ctx *gin.Context) {
+func CheckExample(app domain.IApp) func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
 		// do something
 		<-time.After(time.Millisecond * 10)

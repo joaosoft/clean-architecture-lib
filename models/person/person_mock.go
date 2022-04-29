@@ -1,7 +1,6 @@
 package person
 
 import (
-	"clean-architecture/domain"
 	"clean-architecture/domain/person"
 	"context"
 
@@ -14,10 +13,6 @@ func NewModelMock() *PersonModelMock {
 
 type PersonModelMock struct {
 	mock.Mock
-}
-
-func (m *PersonModelMock) Setup(app *domain.App) error {
-	return nil
 }
 
 func (m *PersonModelMock) GetPersonByID(ctx context.Context, personID int) (*person.Person, error) {

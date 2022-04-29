@@ -1,5 +1,5 @@
 package http
 
 type Http struct {
-	Port int `mapstructure:"port"`
+	Port uint `mapstructure:"port"`
 }

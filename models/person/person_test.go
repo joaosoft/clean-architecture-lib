@@ -2,6 +2,7 @@ package person
 
 import (
 	"clean-architecture/domain/person"
+	"clean-architecture/infrastructure/http/server"
 	repositories "clean-architecture/repositories/person"
 	"context"
 	"testing"
@@ -19,7 +20,8 @@ func TestGetPersonByID(t *testing.T) {
 	repository := repositories.NewPersonRepositoryMock()
 	repository.On("GetPersonByID", context.Background(), personID).Return(expected, nil)
 
-	model := NewPersonModel(repository)
+	app := server.New()
+	model := NewPersonModel(app, repository)
 	person, err := model.GetPersonByID(context.Background(), personID)
 
 	assert.Nil(t, err)

@@ -2,6 +2,7 @@ package person
 
 import (
 	"clean-architecture/domain/person"
+	"clean-architecture/infrastructure/http/server"
 	"context"
 	"regexp"
 	"testing"
@@ -25,7 +26,9 @@ func TestGetPersonByID(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 
 	defer db.Close()
-	repository, err := NewPersonRepository(db)
+
+	app := server.New().WithDb(db)
+	repository, err := NewPersonRepository(app)
 	assert.Nil(t, err)
 
 	mock.ExpectQuery(query).WithArgs(personID).WillReturnRows(rows)

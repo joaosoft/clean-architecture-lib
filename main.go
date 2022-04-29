@@ -4,6 +4,7 @@ import (
 	controllers "clean-architecture/controllers/http/person"
 	_ "clean-architecture/infrastructure"
 	"clean-architecture/infrastructure/config/viper"
+	"clean-architecture/infrastructure/database/postgres"
 	"clean-architecture/infrastructure/http/server"
 	models "clean-architecture/models/person"
 	repositories "clean-architecture/repositories/person"
@@ -11,21 +12,31 @@ import (
 )
 
 func main() {
-	repository, err := repositories.
-		NewPersonRepository()
+	app := server.New()
+
+	config, err := viper.NewViper().Load()
 	if err != nil {
 		panic(err)
 	}
 
-	personController := controllers.NewPersonController(
-		models.NewPersonModel(repository))
+	db, err := postgres.NewConnection(config.Database.Driver, config.Database.DataSource)
+	if err != nil {
+		panic(err)
+	}
 
-	if err = server.
-		New().
-		WithConfigLoader(viper.NewViper()).
+	repository, err := repositories.NewPersonRepository(app)
+	if err != nil {
+		panic(err)
+	}
+
+	personController := controllers.NewPersonController(app, models.NewPersonModel(app, repository))
+
+	app.WithConfig(config).
 		WithLogger(log.Default()).
-		WithController("person", personController).
-		Start(); err != nil {
+		WithDb(db).
+		WithPersonController(personController)
+
+	if err = app.Start(); err != nil {
 		panic(err)
 	}
 }

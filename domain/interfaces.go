@@ -1,29 +1,30 @@
 package domain
 
 import (
+	"clean-architecture/domain/person"
 	"clean-architecture/infrastructure/config"
+	"database/sql"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type IConfig interface {
 	Load() (_ *config.Config, err error)
 }
 
-type IController interface {
-	Setup(app *App) error
-}
-
-type IModel interface {
-	Setup(app *App) error
-}
-
-type IRepository interface {
-	Setup(app *App) error
-}
-
-type IServer interface {
-	Setup() error
-	WithController(personController IController) IServer
-	WithLogger(logger ILogger) IServer
+type IApp interface {
+	WithConfig(*config.Config) IApp
+	Config() *config.Config
+	WithLogger(logger ILogger) IApp
+	Logger() ILogger
+	WithDb(db *sql.DB) IApp
+	Db() *sql.DB
+	WithHttp(http *http.Server) IApp
+	Http() *http.Server
+	WithRouter(router *gin.Engine) IApp
+	Router() *gin.Engine
+	WithPersonController(controller person.IPersonController) IApp
 	Start() error
 	Stop() error
 }

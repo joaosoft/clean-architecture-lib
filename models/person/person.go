@@ -8,24 +8,15 @@ import (
 )
 
 type PersonModel struct {
-	app        *domain.App
+	app        domain.IApp
 	repository person.IPersonRepository
 }
 
-func NewPersonModel(repository person.IPersonRepository) person.IPersonModel {
+func NewPersonModel(app domain.IApp, repository person.IPersonRepository) person.IPersonModel {
 	return &PersonModel{
+		app:        app,
 		repository: repository,
 	}
-}
-
-func (m *PersonModel) Setup(app *domain.App) error {
-	m.app = app
-
-	if m.repository != nil {
-		return m.repository.Setup(app)
-	}
-
-	return nil
 }
 
 func (m *PersonModel) GetPersonByID(ctx context.Context, personID int) (*person.Person, error) {

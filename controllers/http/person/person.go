@@ -14,24 +14,15 @@ import (
 )
 
 type PersonController struct {
-	app   *domain.App
+	app   domain.IApp
 	model person.IPersonModel
 }
 
-func NewPersonController(model person.IPersonModel) person.IPersonController {
+func NewPersonController(app domain.IApp, model person.IPersonModel) person.IPersonController {
 	return &PersonController{
+		app:   app,
 		model: model,
 	}
-}
-
-func (c *PersonController) Setup(app *domain.App) error {
-	c.app = app
-
-	if c.model != nil {
-		return c.model.Setup(app)
-	}
-
-	return nil
 }
 
 func (c *PersonController) GetPersonByID(ctx *gin.Context) {
