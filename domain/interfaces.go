@@ -14,6 +14,7 @@ type IConfig interface {
 }
 
 type IApp interface {
+	WithConfigLoader(configLoader IConfig) IApp
 	WithConfig(*config.Config) IApp
 	Config() *config.Config
 	WithLogger(logger ILogger) IApp

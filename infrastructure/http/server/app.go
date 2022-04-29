@@ -14,11 +14,12 @@ import (
 )
 
 type App struct {
-	http   *http.Server
-	router *gin.Engine
-	logger domain.ILogger
-	db     *sql.DB
-	config *config.Config
+	http         *http.Server
+	router       *gin.Engine
+	logger       domain.ILogger
+	db           *sql.DB
+	configLoader domain.IConfig
+	config       *config.Config
 }
 
 func New() *App {
@@ -38,6 +39,11 @@ func New() *App {
 }
 
 func (s *App) Start() (err error) {
+	if s.configLoader != nil {
+		if s.config, err = s.configLoader.Load(); err != nil {
+			return err
+		}
+	}
 	s.http.Addr = fmt.Sprintf(":%d", s.config.Http.Port)
 	return s.http.ListenAndServe()
 }
@@ -89,6 +95,11 @@ func (s *App) Router() *gin.Engine {
 
 func (s *App) WithConfig(config *config.Config) domain.IApp {
 	s.config = config
+	return s
+}
+
+func (s *App) WithConfigLoader(configLoader domain.IConfig) domain.IApp {
+	s.configLoader = configLoader
 	return s
 }
 
