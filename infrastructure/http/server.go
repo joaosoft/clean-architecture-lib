@@ -11,18 +11,21 @@ import (
 )
 
 type IServer interface {
-	WithController(controller domain.IController) *Server
+	WithController(controller domain.IPersonController) *Server
+	WithLogger(logger domain.ILogger) *Server
 	Start() error
 	Stop() error
 }
 
 type Server struct {
-	App    *http.Server
-	Router *gin.Engine
-	Port   int
+	App        *http.Server
+	Router     *gin.Engine
+	Port       int
+	controller domain.IPersonController
+	logger     domain.ILogger
 }
 
-func New(port int) IServer {
+func New(port int) *Server {
 	gin.SetMode(gin.DebugMode)
 
 	router := gin.New()
@@ -40,7 +43,13 @@ func New(port int) IServer {
 	return server
 }
 
-func (s *Server) WithController(controller domain.IController) *Server {
+func (s *Server) WithLogger(logger domain.ILogger) *Server {
+	s.logger = logger
+	return s
+}
+
+func (s *Server) WithController(controller domain.IPersonController) *Server {
+	s.controller = controller
 	routes.Register(s.Router, controller)
 	return s
 }

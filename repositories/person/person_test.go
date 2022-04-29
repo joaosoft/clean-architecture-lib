@@ -25,7 +25,7 @@ func TestGetPersonByID(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 
 	defer db.Close()
-	repository, err := NewRepository(nil, db)
+	repository, err := NewPersonRepository(nil, db)
 	assert.Nil(t, err)
 
 	mock.ExpectQuery(query).WithArgs(personID).WillReturnRows(rows)

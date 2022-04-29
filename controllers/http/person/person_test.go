@@ -31,7 +31,7 @@ func TestGetPersonByID(t *testing.T) {
 	model := models.NewModelMock()
 	model.On("GetPersonByID", context.Background(), personID).Return(expected, nil)
 
-	controller := NewController(model)
+	controller := NewPersonController(model)
 	routes.Register(engine, controller)
 
 	assert.Nil(t, err)

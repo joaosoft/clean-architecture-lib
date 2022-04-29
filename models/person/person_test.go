@@ -16,10 +16,10 @@ func TestGetPersonByID(t *testing.T) {
 		Name: "João Ribeiro",
 	}
 
-	repository := repositories.NewRepositoryMock()
+	repository := repositories.NewPersonRepositoryMock()
 	repository.On("GetPersonByID", context.Background(), personID).Return(expected, nil)
 
-	model := NewModel(repository)
+	model := NewPersonModel(repository)
 	person, err := model.GetPersonByID(context.Background(), personID)
 
 	assert.Nil(t, err)

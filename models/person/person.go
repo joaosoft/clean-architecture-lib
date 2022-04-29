@@ -5,16 +5,16 @@ import (
 	"context"
 )
 
-type Model struct {
-	repository domain.IRepository
+type PersonModel struct {
+	repository domain.IPersonRepository
 }
 
-func NewModel(repository domain.IRepository) domain.IModel {
-	return &Model{
+func NewPersonModel(repository domain.IPersonRepository) domain.IPersonModel {
+	return &PersonModel{
 		repository: repository,
 	}
 }
 
-func (r *Model) GetPersonByID(ctx context.Context, personID int) (*domain.Person, error) {
+func (r *PersonModel) GetPersonByID(ctx context.Context, personID int) (*domain.Person, error) {
 	return r.repository.GetPersonByID(ctx, personID)
 }

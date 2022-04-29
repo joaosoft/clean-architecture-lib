@@ -11,17 +11,17 @@ import (
 	"github.com/joaosoft/validator"
 )
 
-type Controller struct {
-	model domain.IModel
+type PersonController struct {
+	model domain.IPersonModel
 }
 
-func NewController(model domain.IModel) domain.IController {
-	return &Controller{
+func NewPersonController(model domain.IPersonModel) domain.IPersonController {
+	return &PersonController{
 		model: model,
 	}
 }
 
-func (c *Controller) GetPersonByID(ctx *gin.Context) {
+func (c *PersonController) GetPersonByID(ctx *gin.Context) {
 	ctx.Header("Content-Type", "application/json")
 
 	personID, _ := strconv.Atoi(ctx.Param("id_person"))

@@ -9,12 +9,12 @@ import (
 	"fmt"
 )
 
-type Repository struct {
+type PersonRepository struct {
 	configs *config.Config
 	db      *sql.DB
 }
 
-func NewRepository(config *config.Config, db ...*sql.DB) (_ domain.IRepository, err error) {
+func NewPersonRepository(config *config.Config, db ...*sql.DB) (_ domain.IPersonRepository, err error) {
 	var conn *sql.DB
 	if len(db) > 0 {
 		conn = db[0]
@@ -29,12 +29,12 @@ func NewRepository(config *config.Config, db ...*sql.DB) (_ domain.IRepository, 
 		return nil, err
 	}
 
-	return &Repository{
+	return &PersonRepository{
 		db: conn,
 	}, nil
 }
 
-func (r *Repository) GetPersonByID(ctx context.Context, personID int) (*domain.Person, error) {
+func (r *PersonRepository) GetPersonByID(ctx context.Context, personID int) (*domain.Person, error) {
 	row := r.db.QueryRow("SELECT first_name || ' ' || last_name FROM auth.users WHERE id_users = $1", personID)
 
 	person := &domain.Person{

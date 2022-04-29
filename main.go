@@ -7,6 +7,7 @@ import (
 	"clean-architecture/infrastructure/http"
 	models "clean-architecture/models/person"
 	repositories "clean-architecture/repositories/person"
+	"log"
 )
 
 func main() {
@@ -15,16 +16,17 @@ func main() {
 		panic(err)
 	}
 
-	repository, err := repositories.NewRepository(cfg)
+	repository, err := repositories.NewPersonRepository(cfg)
 	if err != nil {
 		panic(err)
 	}
 
-	controller := controllers.NewController(models.NewModel(repository))
+	controller := controllers.NewPersonController(models.NewPersonModel(repository))
 
 	if err = http.
 		New(cfg.Http.Port).
 		WithController(controller).
+		WithLogger(log.Default()).
 		Start(); err != nil {
 		panic(err)
 	}
