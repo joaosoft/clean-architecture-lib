@@ -1,7 +1,8 @@
 package person
 
 import (
-	domain "clean-architecture/domain/person"
+	"clean-architecture/domain"
+	"clean-architecture/domain/person"
 	"clean-architecture/infrastructure/config"
 	"clean-architecture/infrastructure/database/postgres"
 	"context"
@@ -10,19 +11,15 @@ import (
 )
 
 type PersonRepository struct {
-	configs *config.Config
-	db      *sql.DB
+	config *config.Config
+	logger domain.ILogger
+	db     *sql.DB
 }
 
-func NewPersonRepository(config *config.Config, db ...*sql.DB) (_ domain.IPersonRepository, err error) {
+func NewPersonRepository(db ...*sql.DB) (_ person.IPersonRepository, err error) {
 	var conn *sql.DB
 	if len(db) > 0 {
 		conn = db[0]
-	} else {
-		conn, err = postgres.NewConnection(
-			config.Database.Driver,
-			config.Database.DataSource,
-		)
 	}
 
 	if err != nil {
@@ -34,10 +31,26 @@ func NewPersonRepository(config *config.Config, db ...*sql.DB) (_ domain.IPerson
 	}, nil
 }
 
-func (r *PersonRepository) GetPersonByID(ctx context.Context, personID int) (*domain.Person, error) {
+func (r *PersonRepository) Setup(config *config.Config, logger domain.ILogger) (err error) {
+	r.config = config
+	r.logger = logger
+
+	if r.db == nil {
+		if r.db, err = postgres.NewConnection(
+			config.Database.Driver,
+			config.Database.DataSource,
+		); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (r *PersonRepository) GetPersonByID(ctx context.Context, personID int) (*person.Person, error) {
 	row := r.db.QueryRow("SELECT first_name || ' ' || last_name FROM auth.users WHERE id_users = $1", personID)
 
-	person := &domain.Person{
+	person := &person.Person{
 		Id: personID,
 	}
 

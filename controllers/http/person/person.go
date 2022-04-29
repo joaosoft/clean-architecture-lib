@@ -2,7 +2,9 @@ package person
 
 import (
 	"clean-architecture/controllers/structs"
-	domain "clean-architecture/domain/person"
+	"clean-architecture/domain"
+	"clean-architecture/domain/person"
+	"clean-architecture/infrastructure/config"
 	"net/http"
 	"strconv"
 	"strings"
@@ -12,13 +14,26 @@ import (
 )
 
 type PersonController struct {
-	model domain.IPersonModel
+	config *config.Config
+	logger domain.ILogger
+	model  person.IPersonModel
 }
 
-func NewPersonController(model domain.IPersonModel) domain.IPersonController {
+func NewPersonController(model person.IPersonModel) person.IPersonController {
 	return &PersonController{
 		model: model,
 	}
+}
+
+func (c *PersonController) Setup(config *config.Config, logger domain.ILogger) error {
+	c.config = config
+	c.logger = logger
+
+	if c.model != nil {
+		return c.model.Setup(config, logger)
+	}
+
+	return nil
 }
 
 func (c *PersonController) GetPersonByID(ctx *gin.Context) {

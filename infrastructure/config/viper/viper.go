@@ -6,7 +6,13 @@ import (
 	"github.com/spf13/viper"
 )
 
-func Load() (_ *config.Config, err error) {
+type Viper struct{}
+
+func NewViper() *Viper {
+	return &Viper{}
+}
+
+func (v *Viper) Load() (_ *config.Config, err error) {
 	viper.AddConfigPath("./config")
 
 	if err = viper.ReadInConfig(); err != nil {

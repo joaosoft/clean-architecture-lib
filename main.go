@@ -4,29 +4,28 @@ import (
 	controllers "clean-architecture/controllers/http/person"
 	_ "clean-architecture/infrastructure"
 	"clean-architecture/infrastructure/config/viper"
-	"clean-architecture/infrastructure/http"
+	"clean-architecture/infrastructure/http/server"
 	models "clean-architecture/models/person"
 	repositories "clean-architecture/repositories/person"
 	"log"
 )
 
 func main() {
-	cfg, err := viper.Load()
+	repository, err := repositories.
+		NewPersonRepository()
 	if err != nil {
 		panic(err)
 	}
 
-	repository, err := repositories.NewPersonRepository(cfg)
-	if err != nil {
-		panic(err)
-	}
+	controller := controllers.
+		NewPersonController(
+			models.NewPersonModel(repository))
 
-	controller := controllers.NewPersonController(models.NewPersonModel(repository))
-
-	if err = http.
-		New(cfg.Http.Port).
-		WithController(controller).
+	if err = server.
+		New().
+		WithConfigLoader(viper.NewViper()).
 		WithLogger(log.Default()).
+		WithControllers(controller).
 		Start(); err != nil {
 		panic(err)
 	}

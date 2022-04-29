@@ -8,12 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Register(router *gin.Engine, controller domain.IPersonController) {
+func Register(router *gin.Engine, personController domain.IPersonController) {
 	v1 := router.Group("/v1")
 	v1.Use(
 		middlewares.PrintRequest,
 		middlewares.CheckExample,
 	)
 
-	v1.Handle(http.MethodGet, "/persons/:id_person", controller.GetPersonByID)
+	v1.Handle(http.MethodGet, "/persons/:id_person", personController.GetPersonByID)
 }

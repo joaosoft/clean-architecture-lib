@@ -1,20 +1,35 @@
 package person
 
 import (
-	domain "clean-architecture/domain/person"
+	"clean-architecture/domain"
+	"clean-architecture/domain/person"
+	"clean-architecture/infrastructure/config"
 	"context"
 )
 
 type PersonModel struct {
-	repository domain.IPersonRepository
+	config     *config.Config
+	logger     domain.ILogger
+	repository person.IPersonRepository
 }
 
-func NewPersonModel(repository domain.IPersonRepository) domain.IPersonModel {
+func NewPersonModel(repository person.IPersonRepository) person.IPersonModel {
 	return &PersonModel{
 		repository: repository,
 	}
 }
 
-func (r *PersonModel) GetPersonByID(ctx context.Context, personID int) (*domain.Person, error) {
-	return r.repository.GetPersonByID(ctx, personID)
+func (m *PersonModel) Setup(config *config.Config, logger domain.ILogger) error {
+	m.config = config
+	m.logger = logger
+
+	if m.repository != nil {
+		return m.repository.Setup(config, logger)
+	}
+
+	return nil
+}
+
+func (m *PersonModel) GetPersonByID(ctx context.Context, personID int) (*person.Person, error) {
+	return m.repository.GetPersonByID(ctx, personID)
 }
