@@ -12,12 +12,12 @@ import (
 )
 
 type Server struct {
-	App              *http.Server
-	Router           *gin.Engine
-	configLoader     domain.IConfig
-	config           *config.Config
-	logger           domain.ILogger
-	personController domain.IController
+	App          *http.Server
+	Router       *gin.Engine
+	configLoader domain.IConfig
+	config       *config.Config
+	logger       domain.ILogger
+	controllers  map[string]domain.IController
 }
 
 func New() *Server {
@@ -46,9 +46,8 @@ func (s *Server) WithConfigLoader(configLoader domain.IConfig) *Server {
 	return s
 }
 
-func (s *Server) WithControllers(personController domain.IController) *Server {
-	s.personController = personController
-	routes.Register(s.Router, personController)
+func (s *Server) WithController(name string, controller domain.IController) *Server {
+	s.controllers[name] = controller
 	return s
 }
 
@@ -59,11 +58,13 @@ func (s *Server) Setup() (err error) {
 
 	s.App.Addr = fmt.Sprintf(":%d", s.config.Http.Port)
 
-	if s.personController != nil {
-		return s.personController.Setup(s.config, s.logger)
+	for _, c := range s.controllers {
+		if c != nil {
+			return c.Setup(s.config, s.logger)
+		}
 	}
 
-	return nil
+	return routes.Register(s.Router, s.controllers)
 }
 
 func (s *Server) Start() (err error) {

@@ -2,7 +2,8 @@ package person
 
 import (
 	routes "clean-architecture/api/http"
-	domain "clean-architecture/domain/person"
+	"clean-architecture/domain"
+	"clean-architecture/domain/person"
 	models "clean-architecture/models/person"
 	"context"
 	"encoding/json"
@@ -18,7 +19,7 @@ import (
 
 func TestGetPersonByID(t *testing.T) {
 	personID := 123
-	expected := &domain.Person{
+	expected := &person.Person{
 		Id:   personID,
 		Name: "João Ribeiro",
 	}
@@ -32,8 +33,7 @@ func TestGetPersonByID(t *testing.T) {
 	model.On("GetPersonByID", context.Background(), personID).Return(expected, nil)
 
 	controller := NewPersonController(model)
-	routes.Register(engine, controller)
-
+	err = routes.Register(engine, map[string]domain.IController{"person": controller})
 	assert.Nil(t, err)
 
 	//engine.HandleContext(ctx)
@@ -41,7 +41,7 @@ func TestGetPersonByID(t *testing.T) {
 
 	assert.Equal(t, 200, w.Code)
 
-	var personResult *domain.Person
+	var personResult *person.Person
 	err = json.Unmarshal(w.Body.Bytes(), &personResult)
 	assert.Nil(t, err)
 

@@ -1,7 +1,7 @@
 package person
 
 import (
-	domain "clean-architecture/domain/person"
+	"clean-architecture/domain/person"
 	repositories "clean-architecture/repositories/person"
 	"context"
 	"testing"
@@ -11,7 +11,7 @@ import (
 
 func TestGetPersonByID(t *testing.T) {
 	personID := 123
-	expected := &domain.Person{
+	expected := &person.Person{
 		Id:   personID,
 		Name: "João Ribeiro",
 	}
