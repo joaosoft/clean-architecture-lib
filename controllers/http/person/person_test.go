@@ -33,7 +33,7 @@ func TestGetPersonByID(t *testing.T) {
 	model.On("GetPersonByID", context.Background(), personID).Return(expected, nil)
 
 	controller := NewPersonController(model)
-	err = routes.Register(engine, map[string]domain.IController{"person": controller})
+	err = routes.Register(&domain.App{}, engine, map[string]domain.IController{"person": controller})
 	assert.Nil(t, err)
 
 	//engine.HandleContext(ctx)

@@ -1,12 +1,17 @@
 package middlewares
 
 import (
+	"clean-architecture/domain"
 	"fmt"
+
 	"github.com/gin-gonic/gin"
 )
 
-var PrintRequest = func(ctx *gin.Context) {
-	ctx.Next()
+var PrintRequest = func(app *domain.App) func(ctx *gin.Context) {
+	return func(ctx *gin.Context) {
+		ctx.Next()
 
-	fmt.Printf("%d | %s | %s\n", ctx.Writer.Status(), ctx.Request.Method, ctx.Request.URL.Path)
+		fmt.Println("running middleware printing request")
+		fmt.Printf("%d | %s | %s\n", ctx.Writer.Status(), ctx.Request.Method, ctx.Request.URL.Path)
+	}
 }

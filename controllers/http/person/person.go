@@ -4,7 +4,7 @@ import (
 	"clean-architecture/controllers/structs"
 	"clean-architecture/domain"
 	"clean-architecture/domain/person"
-	"clean-architecture/infrastructure/config"
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -14,9 +14,8 @@ import (
 )
 
 type PersonController struct {
-	config *config.Config
-	logger domain.ILogger
-	model  person.IPersonModel
+	app   *domain.App
+	model person.IPersonModel
 }
 
 func NewPersonController(model person.IPersonModel) person.IPersonController {
@@ -25,18 +24,19 @@ func NewPersonController(model person.IPersonModel) person.IPersonController {
 	}
 }
 
-func (c *PersonController) Setup(config *config.Config, logger domain.ILogger) error {
-	c.config = config
-	c.logger = logger
+func (c *PersonController) Setup(app *domain.App) error {
+	c.app = app
 
 	if c.model != nil {
-		return c.model.Setup(config, logger)
+		return c.model.Setup(app)
 	}
 
 	return nil
 }
 
 func (c *PersonController) GetPersonByID(ctx *gin.Context) {
+	fmt.Println("running person controller")
+
 	ctx.Header("Content-Type", "application/json")
 
 	personID, _ := strconv.Atoi(ctx.Param("id_person"))

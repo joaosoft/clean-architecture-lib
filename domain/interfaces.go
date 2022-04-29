@@ -9,15 +9,15 @@ type IConfig interface {
 }
 
 type IController interface {
-	Setup(config *config.Config, logger ILogger) error
+	Setup(app *App) error
 }
 
 type IModel interface {
-	Setup(config *config.Config, logger ILogger) error
+	Setup(app *App) error
 }
 
 type IRepository interface {
-	Setup(config *config.Config, logger ILogger) error
+	Setup(app *App) error
 }
 
 type IServer interface {

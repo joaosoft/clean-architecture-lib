@@ -17,15 +17,14 @@ func main() {
 		panic(err)
 	}
 
-	controller := controllers.
-		NewPersonController(
-			models.NewPersonModel(repository))
+	personController := controllers.NewPersonController(
+		models.NewPersonModel(repository))
 
 	if err = server.
 		New().
 		WithConfigLoader(viper.NewViper()).
 		WithLogger(log.Default()).
-		WithControllers(controller).
+		WithController("person", personController).
 		Start(); err != nil {
 		panic(err)
 	}

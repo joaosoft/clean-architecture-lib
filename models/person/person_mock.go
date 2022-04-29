@@ -3,7 +3,6 @@ package person
 import (
 	"clean-architecture/domain"
 	"clean-architecture/domain/person"
-	"clean-architecture/infrastructure/config"
 	"context"
 
 	"github.com/stretchr/testify/mock"
@@ -17,7 +16,7 @@ type PersonModelMock struct {
 	mock.Mock
 }
 
-func (m *PersonModelMock) Setup(config *config.Config, logger domain.ILogger) error {
+func (m *PersonModelMock) Setup(app *domain.App) error {
 	return nil
 }
 

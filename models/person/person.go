@@ -3,13 +3,12 @@ package person
 import (
 	"clean-architecture/domain"
 	"clean-architecture/domain/person"
-	"clean-architecture/infrastructure/config"
 	"context"
+	"fmt"
 )
 
 type PersonModel struct {
-	config     *config.Config
-	logger     domain.ILogger
+	app        *domain.App
 	repository person.IPersonRepository
 }
 
@@ -19,17 +18,18 @@ func NewPersonModel(repository person.IPersonRepository) person.IPersonModel {
 	}
 }
 
-func (m *PersonModel) Setup(config *config.Config, logger domain.ILogger) error {
-	m.config = config
-	m.logger = logger
+func (m *PersonModel) Setup(app *domain.App) error {
+	m.app = app
 
 	if m.repository != nil {
-		return m.repository.Setup(config, logger)
+		return m.repository.Setup(app)
 	}
 
 	return nil
 }
 
 func (m *PersonModel) GetPersonByID(ctx context.Context, personID int) (*person.Person, error) {
+	fmt.Println("running person model")
+
 	return m.repository.GetPersonByID(ctx, personID)
 }

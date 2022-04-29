@@ -3,7 +3,6 @@ package person
 import (
 	"clean-architecture/domain"
 	"clean-architecture/domain/person"
-	"clean-architecture/infrastructure/config"
 	"clean-architecture/infrastructure/database/postgres"
 	"context"
 	"database/sql"
@@ -11,9 +10,8 @@ import (
 )
 
 type PersonRepository struct {
-	config *config.Config
-	logger domain.ILogger
-	db     *sql.DB
+	app *domain.App
+	db  *sql.DB
 }
 
 func NewPersonRepository(db ...*sql.DB) (_ person.IPersonRepository, err error) {
@@ -31,14 +29,13 @@ func NewPersonRepository(db ...*sql.DB) (_ person.IPersonRepository, err error) 
 	}, nil
 }
 
-func (r *PersonRepository) Setup(config *config.Config, logger domain.ILogger) (err error) {
-	r.config = config
-	r.logger = logger
+func (r *PersonRepository) Setup(app *domain.App) (err error) {
+	r.app = app
 
 	if r.db == nil {
 		if r.db, err = postgres.NewConnection(
-			config.Database.Driver,
-			config.Database.DataSource,
+			app.Config.Database.Driver,
+			app.Config.Database.DataSource,
 		); err != nil {
 			return err
 		}
@@ -48,6 +45,8 @@ func (r *PersonRepository) Setup(config *config.Config, logger domain.ILogger) (
 }
 
 func (r *PersonRepository) GetPersonByID(ctx context.Context, personID int) (*person.Person, error) {
+	fmt.Println("running person repository")
+
 	row := r.db.QueryRow("SELECT first_name || ' ' || last_name FROM auth.users WHERE id_users = $1", personID)
 
 	person := &person.Person{

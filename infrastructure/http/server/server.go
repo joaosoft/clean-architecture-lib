@@ -3,7 +3,6 @@ package server
 import (
 	routes "clean-architecture/api/http"
 	domain "clean-architecture/domain"
-	"clean-architecture/infrastructure/config"
 	"context"
 	"fmt"
 	"net/http"
@@ -12,11 +11,10 @@ import (
 )
 
 type Server struct {
-	App          *http.Server
+	Http         *http.Server
 	Router       *gin.Engine
 	configLoader domain.IConfig
-	config       *config.Config
-	logger       domain.ILogger
+	App          *domain.App
 	controllers  map[string]domain.IController
 }
 
@@ -25,10 +23,12 @@ func New() *Server {
 
 	router := gin.New()
 	server := &Server{
-		App: &http.Server{
+		App: &domain.App{},
+		Http: &http.Server{
 			Handler: router,
 		},
-		Router: router,
+		Router:      router,
+		controllers: make(map[string]domain.IController),
 	}
 
 	router.Use(gin.Recovery())
@@ -37,7 +37,7 @@ func New() *Server {
 }
 
 func (s *Server) WithLogger(logger domain.ILogger) *Server {
-	s.logger = logger
+	s.App.Logger = logger
 	return s
 }
 
@@ -52,28 +52,31 @@ func (s *Server) WithController(name string, controller domain.IController) *Ser
 }
 
 func (s *Server) Setup() (err error) {
-	if s.config, err = s.configLoader.Load(); err != nil {
+	if s.App.Config, err = s.configLoader.Load(); err != nil {
 		return err
 	}
 
-	s.App.Addr = fmt.Sprintf(":%d", s.config.Http.Port)
+	s.Http.Addr = fmt.Sprintf(":%d", s.App.Config.Http.Port)
 
 	for _, c := range s.controllers {
 		if c != nil {
-			return c.Setup(s.config, s.logger)
+			if err = c.Setup(s.App); err != nil {
+				return err
+			}
 		}
 	}
 
-	return routes.Register(s.Router, s.controllers)
+	return routes.Register(s.App, s.Router, s.controllers)
 }
 
 func (s *Server) Start() (err error) {
 	if err = s.Setup(); err != nil {
 		return err
 	}
-	return s.App.ListenAndServe()
+
+	return s.Http.ListenAndServe()
 }
 
 func (s *Server) Stop() (err error) {
-	return s.App.Shutdown(context.Background())
+	return s.Http.Shutdown(context.Background())
 }

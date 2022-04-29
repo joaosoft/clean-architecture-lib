@@ -10,9 +10,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Register(router *gin.Engine, controllers map[string]domain.IController) error {
-	v1.Register(router, controllers["person"].(person.IPersonController))
-	v2.Register(router, controllers["person"].(person.IPersonController))
+func Register(app *domain.App, router *gin.Engine, controllers map[string]domain.IController) error {
+	v1.Register(app, router, controllers["person"].(person.IPersonController))
+	v2.Register(app, router, controllers["person"].(person.IPersonController))
 
 	router.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, struct {
