@@ -2,7 +2,6 @@ package person
 
 import (
 	"clean-architecture/domain/person"
-	"clean-architecture/infrastructure/http/server"
 	models "clean-architecture/models/person"
 	"context"
 	"encoding/json"
@@ -31,7 +30,7 @@ func TestGetPersonByID(t *testing.T) {
 	model := models.NewModelMock()
 	model.On("GetPersonByID", context.Background(), personID).Return(expected, nil)
 
-	app := server.New().WithRouter(engine)
+	app := app.New().WithRouter(engine)
 	controller := NewPersonController(app, model)
 	app.WithPersonController(controller)
 	assert.Nil(t, err)

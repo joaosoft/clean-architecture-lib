@@ -2,7 +2,6 @@ package person
 
 import (
 	"clean-architecture/domain/person"
-	"clean-architecture/infrastructure/http/server"
 	"context"
 	"regexp"
 	"testing"
@@ -27,7 +26,7 @@ func TestGetPersonByID(t *testing.T) {
 
 	defer db.Close()
 
-	app := server.New().WithDb(db)
+	app := app.New().WithDb(db)
 	repository, err := NewPersonRepository(app)
 	assert.Nil(t, err)
 

@@ -3,16 +3,16 @@ package main
 import (
 	controllers "clean-architecture/controllers/http/person"
 	_ "clean-architecture/infrastructure"
+	"clean-architecture/infrastructure/app/http"
 	"clean-architecture/infrastructure/config/viper"
 	"clean-architecture/infrastructure/database/postgres"
-	"clean-architecture/infrastructure/http/server"
 	models "clean-architecture/models/person"
 	repositories "clean-architecture/repositories/person"
 	"log"
 )
 
 func main() {
-	app := server.New()
+	app := http.New()
 
 	config, err := viper.NewViper().Load()
 	if err != nil {

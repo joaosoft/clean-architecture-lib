@@ -1,11 +1,11 @@
 package config
 
 import (
+	"clean-architecture/infrastructure/app"
 	"clean-architecture/infrastructure/database"
-	"clean-architecture/infrastructure/http"
 )
 
 type Config struct {
-	Http     http.Http         `mapstructure:"http"`
+	Http     app.Http          `mapstructure:"http"`
 	Database database.Database `mapstructure:"database"`
 }
