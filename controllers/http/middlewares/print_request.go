@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var PrintRequest = func(server domain.IApp) func(ctx *gin.Context) {
+func PrintRequest(app domain.IApp) func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
 		ctx.Next()
 

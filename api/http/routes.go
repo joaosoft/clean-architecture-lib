@@ -10,11 +10,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterRoutes(server domain.IApp, controller ...controller.IController) {
-	v1.RegisterRoutes(server, controller...)
-	v2.RegisterRoutes(server, controller...)
+func RegisterRoutes(app domain.IApp, controller ...controller.IController) {
+	v1.RegisterRoutes(app, controller...)
+	v2.RegisterRoutes(app, controller...)
 
-	server.Router().NoRoute(func(c *gin.Context) {
+	app.Router().NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, struct {
 			Code  int    `json:"code"`
 			Error string `json:"error"`
