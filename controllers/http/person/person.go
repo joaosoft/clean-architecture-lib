@@ -25,7 +25,7 @@ func NewPersonController(app domain.IApp, model person.IPersonModel) person.IPer
 	}
 }
 
-func (c *PersonController) GetPersonByID(ctx *gin.Context) {
+func (c *PersonController) Get(ctx *gin.Context) {
 	fmt.Println("running person controller")
 
 	ctx.Header("Content-Type", "application/json")
@@ -61,3 +61,7 @@ func (c *PersonController) GetPersonByID(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, person)
 }
+
+func (c *PersonController) Put(ctx *gin.Context)    {}
+func (c *PersonController) Post(ctx *gin.Context)   {}
+func (c *PersonController) Delete(ctx *gin.Context) {}

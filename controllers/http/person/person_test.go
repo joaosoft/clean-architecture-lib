@@ -2,6 +2,7 @@ package person
 
 import (
 	"clean-architecture/domain/person"
+	app "clean-architecture/infrastructure/app/http"
 	models "clean-architecture/models/person"
 	"context"
 	"encoding/json"
@@ -32,7 +33,7 @@ func TestGetPersonByID(t *testing.T) {
 
 	app := app.New().WithRouter(engine)
 	controller := NewPersonController(app, model)
-	app.WithPersonController(controller)
+	app.WithController(controller)
 	assert.Nil(t, err)
 
 	//engine.HandleContext(ctx)

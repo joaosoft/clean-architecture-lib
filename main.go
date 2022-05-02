@@ -34,7 +34,7 @@ func main() {
 	app.WithConfig(config).
 		WithLogger(log.Default()).
 		WithDb(db).
-		WithPersonController(personController)
+		WithController(personController)
 
 	if err = app.Start(); err != nil {
 		panic(err)

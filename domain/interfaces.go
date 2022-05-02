@@ -1,7 +1,7 @@
 package domain
 
 import (
-	"clean-architecture/domain/person"
+	controller "clean-architecture/controllers/http"
 	"clean-architecture/infrastructure/config"
 	"database/sql"
 	"net/http"
@@ -25,7 +25,7 @@ type IApp interface {
 	Http() *http.Server
 	WithRouter(router *gin.Engine) IApp
 	Router() *gin.Engine
-	WithPersonController(controller person.IPersonController) IApp
+	WithController(controller ...controller.IController) IApp
 	Start() error
 	Stop() error
 }

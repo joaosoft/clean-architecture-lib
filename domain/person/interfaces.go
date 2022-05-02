@@ -1,13 +1,12 @@
 package person
 
 import (
+	"clean-architecture/controllers/http"
 	"context"
-
-	"github.com/gin-gonic/gin"
 )
 
 type IPersonController interface {
-	GetPersonByID(ctx *gin.Context)
+	http.IController
 }
 
 type IPersonModel interface {

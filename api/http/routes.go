@@ -3,16 +3,16 @@ package http
 import (
 	v1 "clean-architecture/api/http/v1"
 	v2 "clean-architecture/api/http/v2"
+	controller "clean-architecture/controllers/http"
 	"clean-architecture/domain"
-	person "clean-architecture/domain/person"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterPersonRoutes(server domain.IApp, controller person.IPersonController) {
-	v1.RegisterPersonRoutes(server, controller)
-	v2.RegisterPersonRoutes(server, controller)
+func RegisterRoutes(server domain.IApp, controller ...controller.IController) {
+	v1.RegisterRoutes(server, controller...)
+	v2.RegisterRoutes(server, controller...)
 
 	server.Router().NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, struct {
