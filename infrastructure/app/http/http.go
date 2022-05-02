@@ -13,7 +13,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type App struct {
+type AppHttp struct {
 	http         *http.Server
 	router       *gin.Engine
 	logger       domain.ILogger
@@ -22,11 +22,11 @@ type App struct {
 	config       *config.Config
 }
 
-func New() *App {
+func New() *AppHttp {
 	gin.SetMode(gin.DebugMode)
 
 	router := gin.New()
-	app := &App{
+	app := &AppHttp{
 		http: &http.Server{
 			Handler: router,
 		},
@@ -38,7 +38,7 @@ func New() *App {
 	return app
 }
 
-func (s *App) Start() (err error) {
+func (s *AppHttp) Start() (err error) {
 	if s.configLoader != nil {
 		if s.config, err = s.configLoader.Load(); err != nil {
 			return err
@@ -48,61 +48,61 @@ func (s *App) Start() (err error) {
 	return s.http.ListenAndServe()
 }
 
-func (s *App) Stop() (err error) {
+func (s *AppHttp) Stop() (err error) {
 	return s.http.Shutdown(context.Background())
 }
 
-func (s *App) WithController(controller ...controller.IController) domain.IApp {
+func (s *AppHttp) WithController(controller ...controller.IController) domain.IApp {
 	routes.RegisterRoutes(s, controller...)
 	return s
 }
 
-func (s *App) WithLogger(logger domain.ILogger) domain.IApp {
+func (s *AppHttp) WithLogger(logger domain.ILogger) domain.IApp {
 	s.logger = logger
 	return s
 }
 
-func (s *App) Logger() domain.ILogger {
+func (s *AppHttp) Logger() domain.ILogger {
 	return s.logger
 }
 
-func (s *App) WithDb(db *sql.DB) domain.IApp {
+func (s *AppHttp) WithDb(db *sql.DB) domain.IApp {
 	s.db = db
 	return s
 }
 
-func (s *App) Db() *sql.DB {
+func (s *AppHttp) Db() *sql.DB {
 	return s.db
 }
 
-func (s *App) WithHttp(http *http.Server) domain.IApp {
+func (s *AppHttp) WithHttp(http *http.Server) domain.IApp {
 	s.http = http
 	return s
 }
 
-func (s *App) Http() *http.Server {
+func (s *AppHttp) Http() *http.Server {
 	return s.http
 }
 
-func (s *App) WithRouter(router *gin.Engine) domain.IApp {
+func (s *AppHttp) WithRouter(router *gin.Engine) domain.IApp {
 	s.router = router
 	return s
 }
 
-func (s *App) Router() *gin.Engine {
+func (s *AppHttp) Router() *gin.Engine {
 	return s.router
 }
 
-func (s *App) WithConfig(config *config.Config) domain.IApp {
+func (s *AppHttp) WithConfig(config *config.Config) domain.IApp {
 	s.config = config
 	return s
 }
 
-func (s *App) WithConfigLoader(configLoader domain.IConfig) domain.IApp {
+func (s *AppHttp) WithConfigLoader(configLoader domain.IConfig) domain.IApp {
 	s.configLoader = configLoader
 	return s
 }
 
-func (s *App) Config() *config.Config {
+func (s *AppHttp) Config() *config.Config {
 	return s.config
 }

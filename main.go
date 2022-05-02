@@ -3,7 +3,7 @@ package main
 import (
 	controllers "clean-architecture/controllers/http/person"
 	_ "clean-architecture/infrastructure"
-	"clean-architecture/infrastructure/app/http"
+	appHttp "clean-architecture/infrastructure/app/http"
 	"clean-architecture/infrastructure/config/viper"
 	"clean-architecture/infrastructure/database/postgres"
 	models "clean-architecture/models/person"
@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	app := http.New()
+	app := appHttp.New()
 
 	config, err := viper.NewViper().Load()
 	if err != nil {
