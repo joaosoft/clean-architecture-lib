@@ -2,7 +2,6 @@ package http
 
 import (
 	routes "clean-architecture/api/http"
-	controller "clean-architecture/controllers/http"
 	"clean-architecture/domain"
 	"clean-architecture/infrastructure/config"
 	"context"
@@ -52,7 +51,7 @@ func (s *AppHttp) Stop() (err error) {
 	return s.http.Shutdown(context.Background())
 }
 
-func (s *AppHttp) WithController(controller ...controller.IController) domain.IApp {
+func (s *AppHttp) WithController(controller ...domain.IController) domain.IApp {
 	routes.RegisterRoutes(s, controller...)
 	return s
 }

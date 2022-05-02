@@ -1,13 +1,19 @@
 package domain
 
 import (
-	controller "clean-architecture/controllers/http"
 	"clean-architecture/infrastructure/config"
 	"database/sql"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
+
+type IController interface {
+	Get(ctx *gin.Context)
+	Put(ctx *gin.Context)
+	Post(ctx *gin.Context)
+	Delete(ctx *gin.Context)
+}
 
 type IConfig interface {
 	Load() (_ *config.Config, err error)
@@ -25,7 +31,7 @@ type IApp interface {
 	Http() *http.Server
 	WithRouter(router *gin.Engine) IApp
 	Router() *gin.Engine
-	WithController(controller ...controller.IController) IApp
+	WithController(controller ...IController) IApp
 	Start() error
 	Stop() error
 }

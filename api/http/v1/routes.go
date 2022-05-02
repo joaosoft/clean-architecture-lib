@@ -1,14 +1,13 @@
 package v1
 
 import (
-	controller "clean-architecture/controllers/http"
 	"clean-architecture/controllers/http/middlewares"
 	"clean-architecture/domain"
 	"clean-architecture/domain/person"
 	"net/http"
 )
 
-func RegisterRoutes(app domain.IApp, controller ...controller.IController) {
+func RegisterRoutes(app domain.IApp, controller ...domain.IController) {
 	v1 := app.Router().Group("/v1")
 	v1.Use(
 		middlewares.PrintRequest(app),
