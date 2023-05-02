@@ -3,13 +3,14 @@ package http
 import (
 	v1 "clean-architecture/api/http/v1"
 	v2 "clean-architecture/api/http/v2"
-	"clean-architecture/domain"
+	"clean-architecture/infrastructure/domain/app"
+	httpDomain "clean-architecture/infrastructure/domain/http"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterRoutes(app domain.IApp, controller ...domain.IController) {
+func RegisterRoutes(app app.IApp, controller ...httpDomain.IHttpController) {
 	v1.RegisterRoutes(app, controller...)
 	v2.RegisterRoutes(app, controller...)
 

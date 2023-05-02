@@ -1,8 +1,8 @@
 package person
 
 import (
-	"clean-architecture/domain/person"
-	appHttp "clean-architecture/infrastructure/app/http"
+	personDomain "clean-architecture/domain/person"
+	httpApp "clean-architecture/infrastructure/app/http"
 	"context"
 	"regexp"
 	"testing"
@@ -14,7 +14,7 @@ import (
 
 func TestGetPersonByID(t *testing.T) {
 	personID := 123
-	expected := &person.Person{
+	expected := &personDomain.Person{
 		Id:   personID,
 		Name: "João Ribeiro",
 	}
@@ -27,7 +27,7 @@ func TestGetPersonByID(t *testing.T) {
 
 	defer db.Close()
 
-	app := appHttp.New().WithDb(db)
+	app := httpApp.New().WithDb(db)
 	repository, err := NewPersonRepository(app)
 	assert.Nil(t, err)
 

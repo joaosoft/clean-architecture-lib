@@ -1,12 +1,12 @@
 package person
 
 import (
-	"clean-architecture/domain"
+	"clean-architecture/infrastructure/domain/http"
 	"context"
 )
 
 type IPersonController interface {
-	domain.IController
+	http.IHttpController
 }
 
 type IPersonModel interface {

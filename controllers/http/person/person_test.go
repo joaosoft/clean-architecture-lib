@@ -2,8 +2,8 @@ package person
 
 import (
 	"clean-architecture/domain/person"
-	appHttp "clean-architecture/infrastructure/app/http"
-	models "clean-architecture/models/person"
+	httpApp "clean-architecture/infrastructure/app/http"
+	personModel "clean-architecture/models/person"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -28,12 +28,12 @@ func TestGetPersonByID(t *testing.T) {
 	var err error
 	ctx.Request, err = http.NewRequest(http.MethodGet, fmt.Sprintf("/v1/persons/%d", personID), nil)
 
-	model := models.NewModelMock()
-	model.On("GetPersonByID", context.Background(), personID).Return(expected, nil)
+	personModel := personModel.NewModelMock()
+	personModel.On("GetPersonByID", context.Background(), personID).Return(expected, nil)
 
-	app := appHttp.New().WithRouter(engine)
-	controller := NewPersonController(app, model)
-	app.WithController(controller)
+	app := httpApp.New().WithRouter(engine)
+	personController := NewPersonController(app, personModel)
+	app.WithController(personController)
 	assert.Nil(t, err)
 
 	//engine.HandleContext(ctx)

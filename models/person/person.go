@@ -1,25 +1,25 @@
 package person
 
 import (
-	"clean-architecture/domain"
-	"clean-architecture/domain/person"
+	personDomain "clean-architecture/domain/person"
+	appDomain "clean-architecture/infrastructure/domain/app"
 	"context"
 	"fmt"
 )
 
 type PersonModel struct {
-	app        domain.IApp
-	repository person.IPersonRepository
+	app        appDomain.IApp
+	repository personDomain.IPersonRepository
 }
 
-func NewPersonModel(app domain.IApp, repository person.IPersonRepository) person.IPersonModel {
+func NewPersonModel(app appDomain.IApp, repository personDomain.IPersonRepository) personDomain.IPersonModel {
 	return &PersonModel{
 		app:        app,
 		repository: repository,
 	}
 }
 
-func (m *PersonModel) GetPersonByID(ctx context.Context, personID int) (*person.Person, error) {
+func (m *PersonModel) GetPersonByID(ctx context.Context, personID int) (*personDomain.Person, error) {
 	fmt.Println("running person model")
 
 	return m.repository.GetPersonByID(ctx, personID)

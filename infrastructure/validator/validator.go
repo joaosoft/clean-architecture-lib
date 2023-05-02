@@ -1,12 +1,12 @@
 package validator
 
 import (
-	"clean-architecture/controllers/validators"
+	"clean-architecture/controllers/validators/person"
 
 	"github.com/joaosoft/validator"
 )
 
 func InitValidator() {
 	validator.SetValidateAll(true).
-		AddCallback("checkPerson", validators.CheckPerson)
+		AddCallback("checkPerson", person.CheckPerson)
 }

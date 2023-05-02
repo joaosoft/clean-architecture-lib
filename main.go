@@ -2,7 +2,6 @@ package main
 
 import (
 	controllers "clean-architecture/controllers/http/person"
-	_ "clean-architecture/infrastructure"
 	appHttp "clean-architecture/infrastructure/app/http"
 	"clean-architecture/infrastructure/config/viper"
 	"clean-architecture/infrastructure/database/postgres"
@@ -24,12 +23,12 @@ func main() {
 		panic(err)
 	}
 
-	repository, err := repositories.NewPersonRepository(app)
+	personRepo, err := repositories.NewPersonRepository(app)
 	if err != nil {
 		panic(err)
 	}
 
-	personController := controllers.NewPersonController(app, models.NewPersonModel(app, repository))
+	personController := controllers.NewPersonController(app, models.NewPersonModel(app, personRepo))
 
 	app.WithConfig(config).
 		WithLogger(log.Default()).

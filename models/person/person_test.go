@@ -1,9 +1,9 @@
 package person
 
 import (
-	"clean-architecture/domain/person"
-	appHttp "clean-architecture/infrastructure/app/http"
-	repositories "clean-architecture/repositories/person"
+	personDomain "clean-architecture/domain/person"
+	httpApp "clean-architecture/infrastructure/app/http"
+	personRepo "clean-architecture/repositories/person"
 	"context"
 	"testing"
 
@@ -12,15 +12,15 @@ import (
 
 func TestGetPersonByID(t *testing.T) {
 	personID := 123
-	expected := &person.Person{
+	expected := &personDomain.Person{
 		Id:   personID,
 		Name: "João Ribeiro",
 	}
 
-	repository := repositories.NewPersonRepositoryMock()
+	repository := personRepo.NewPersonRepositoryMock()
 	repository.On("GetPersonByID", context.Background(), personID).Return(expected, nil)
 
-	app := appHttp.New()
+	app := httpApp.New()
 	model := NewPersonModel(app, repository)
 	person, err := model.GetPersonByID(context.Background(), personID)
 

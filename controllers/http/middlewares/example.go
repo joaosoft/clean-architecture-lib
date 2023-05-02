@@ -1,14 +1,14 @@
 package middlewares
 
 import (
-	"clean-architecture/domain"
+	"clean-architecture/infrastructure/domain/app"
 	"fmt"
 	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
-func CheckExample(app domain.IApp) func(ctx *gin.Context) {
+func CheckExample(app app.IApp) func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
 		// do something
 		<-time.After(time.Millisecond * 10)

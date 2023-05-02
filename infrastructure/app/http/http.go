@@ -2,8 +2,11 @@ package http
 
 import (
 	routes "clean-architecture/api/http"
-	"clean-architecture/domain"
 	"clean-architecture/infrastructure/config"
+	"clean-architecture/infrastructure/domain/app"
+	configDomain "clean-architecture/infrastructure/domain/config"
+	httpDomain "clean-architecture/infrastructure/domain/http"
+	"clean-architecture/infrastructure/domain/logger"
 	"context"
 	"database/sql"
 	"fmt"
@@ -15,9 +18,9 @@ import (
 type AppHttp struct {
 	http         *http.Server
 	router       *gin.Engine
-	logger       domain.ILogger
+	logger       logger.ILogger
 	db           *sql.DB
-	configLoader domain.IConfig
+	configLoader configDomain.IConfig
 	config       *config.Config
 }
 
@@ -51,21 +54,21 @@ func (s *AppHttp) Stop() (err error) {
 	return s.http.Shutdown(context.Background())
 }
 
-func (s *AppHttp) WithController(controller ...domain.IController) domain.IApp {
+func (s *AppHttp) WithController(controller ...httpDomain.IHttpController) app.IApp {
 	routes.RegisterRoutes(s, controller...)
 	return s
 }
 
-func (s *AppHttp) WithLogger(logger domain.ILogger) domain.IApp {
+func (s *AppHttp) WithLogger(logger logger.ILogger) app.IApp {
 	s.logger = logger
 	return s
 }
 
-func (s *AppHttp) Logger() domain.ILogger {
+func (s *AppHttp) Logger() logger.ILogger {
 	return s.logger
 }
 
-func (s *AppHttp) WithDb(db *sql.DB) domain.IApp {
+func (s *AppHttp) WithDb(db *sql.DB) app.IApp {
 	s.db = db
 	return s
 }
@@ -74,7 +77,7 @@ func (s *AppHttp) Db() *sql.DB {
 	return s.db
 }
 
-func (s *AppHttp) WithHttp(http *http.Server) domain.IApp {
+func (s *AppHttp) WithHttp(http *http.Server) app.IApp {
 	s.http = http
 	return s
 }
@@ -83,7 +86,7 @@ func (s *AppHttp) Http() *http.Server {
 	return s.http
 }
 
-func (s *AppHttp) WithRouter(router *gin.Engine) domain.IApp {
+func (s *AppHttp) WithRouter(router *gin.Engine) app.IApp {
 	s.router = router
 	return s
 }
@@ -92,12 +95,12 @@ func (s *AppHttp) Router() *gin.Engine {
 	return s.router
 }
 
-func (s *AppHttp) WithConfig(config *config.Config) domain.IApp {
+func (s *AppHttp) WithConfig(config *config.Config) app.IApp {
 	s.config = config
 	return s
 }
 
-func (s *AppHttp) WithConfigLoader(configLoader domain.IConfig) domain.IApp {
+func (s *AppHttp) WithConfigLoader(configLoader configDomain.IConfig) app.IApp {
 	s.configLoader = configLoader
 	return s
 }

@@ -2,8 +2,9 @@ package person
 
 import (
 	"clean-architecture/controllers/structs"
-	"clean-architecture/domain"
-	"clean-architecture/domain/person"
+	"clean-architecture/controllers/structs/person"
+	personDomain "clean-architecture/domain/person"
+	appDomain "clean-architecture/infrastructure/domain/app"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -14,11 +15,11 @@ import (
 )
 
 type PersonController struct {
-	app   domain.IApp
-	model person.IPersonModel
+	app   appDomain.IApp
+	model personDomain.IPersonModel
 }
 
-func NewPersonController(app domain.IApp, model person.IPersonModel) person.IPersonController {
+func NewPersonController(app appDomain.IApp, model personDomain.IPersonModel) personDomain.IPersonController {
 	return &PersonController{
 		app:   app,
 		model: model,
@@ -31,7 +32,7 @@ func (c *PersonController) Get(ctx *gin.Context) {
 	ctx.Header("Content-Type", "application/json")
 
 	personID, _ := strconv.Atoi(ctx.Param("id_person"))
-	request := structs.GetPersonByIDRequest{
+	request := person.GetPersonByIDRequest{
 		IdPerson: personID,
 	}
 

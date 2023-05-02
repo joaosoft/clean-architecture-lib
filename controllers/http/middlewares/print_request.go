@@ -1,13 +1,13 @@
 package middlewares
 
 import (
-	"clean-architecture/domain"
+	"clean-architecture/infrastructure/domain/app"
 	"fmt"
 
 	"github.com/gin-gonic/gin"
 )
 
-func PrintRequest(app domain.IApp) func(ctx *gin.Context) {
+func PrintRequest(app app.IApp) func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
 		ctx.Next()
 

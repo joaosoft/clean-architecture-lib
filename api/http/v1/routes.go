@@ -2,12 +2,19 @@ package v1
 
 import (
 	"clean-architecture/controllers/http/middlewares"
-	"clean-architecture/domain"
-	"clean-architecture/domain/person"
+	"clean-architecture/controllers/http/person"
+	"clean-architecture/infrastructure/domain/app"
+	httpDomain "clean-architecture/infrastructure/domain/http"
 	"net/http"
 )
 
-func RegisterRoutes(app domain.IApp, controller ...domain.IController) {
+type Route struct {
+	Version int
+	Path    string
+	Method  string
+}
+
+func RegisterRoutes(app app.IApp, controller ...httpDomain.IHttpController) {
 	v1 := app.Router().Group("/v1")
 	v1.Use(
 		middlewares.PrintRequest(app),
@@ -16,7 +23,7 @@ func RegisterRoutes(app domain.IApp, controller ...domain.IController) {
 
 	for _, c := range controller {
 		switch value := c.(type) {
-		case person.IPersonController:
+		case *person.PersonController:
 			v1.Handle(http.MethodGet, "/persons/:id_person", value.Get)
 		}
 	}
