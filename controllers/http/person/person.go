@@ -1,11 +1,11 @@
 package person
 
 import (
-	"clean-architecture/controllers/structs"
-	"clean-architecture/controllers/structs/person"
-	personDomain "clean-architecture/domain/person"
-	appDomain "clean-architecture/infrastructure/domain/app"
 	"fmt"
+	"github.com/joaosoft/clean-architecture/controllers/structs"
+	"github.com/joaosoft/clean-architecture/controllers/structs/person"
+	personDomain "github.com/joaosoft/clean-architecture/domain/person"
+	appDomain "github.com/joaosoft/clean-architecture/infrastructure/domain/app"
 	"net/http"
 	"strconv"
 	"strings"

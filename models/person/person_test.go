@@ -1,10 +1,10 @@
 package person
 
 import (
-	personDomain "clean-architecture/domain/person"
-	httpApp "clean-architecture/infrastructure/app/http"
-	personRepo "clean-architecture/repositories/person"
 	"context"
+	personDomain "github.com/joaosoft/clean-architecture/domain/person"
+	httpApp "github.com/joaosoft/clean-architecture/infrastructure/app/http"
+	personRepo "github.com/joaosoft/clean-architecture/repositories/person"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

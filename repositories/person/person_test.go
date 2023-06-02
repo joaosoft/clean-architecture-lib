@@ -1,9 +1,9 @@
 package person
 
 import (
-	personDomain "clean-architecture/domain/person"
-	httpApp "clean-architecture/infrastructure/app/http"
 	"context"
+	personDomain "github.com/joaosoft/clean-architecture/domain/person"
+	httpApp "github.com/joaosoft/clean-architecture/infrastructure/app/http"
 	"regexp"
 	"testing"
 

@@ -1,8 +1,8 @@
 package middlewares
 
 import (
-	"clean-architecture/infrastructure/domain/app"
 	"fmt"
+	"github.com/joaosoft/clean-architecture/infrastructure/domain/app"
 	"time"
 
 	"github.com/gin-gonic/gin"

@@ -1,7 +1,7 @@
 package validator
 
 import (
-	"clean-architecture/controllers/validators/person"
+	"github.com/joaosoft/clean-architecture/controllers/validators/person"
 
 	"github.com/joaosoft/validator"
 )

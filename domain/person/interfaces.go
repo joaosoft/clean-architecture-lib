@@ -1,8 +1,8 @@
 package person
 
 import (
-	"clean-architecture/infrastructure/domain/http"
 	"context"
+	"github.com/joaosoft/clean-architecture/infrastructure/domain/http"
 )
 
 type IPersonController interface {

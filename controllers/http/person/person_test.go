@@ -1,12 +1,12 @@
 package person
 
 import (
-	"clean-architecture/domain/person"
-	httpApp "clean-architecture/infrastructure/app/http"
-	personModel "clean-architecture/models/person"
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/joaosoft/clean-architecture/domain/person"
+	httpApp "github.com/joaosoft/clean-architecture/infrastructure/app/http"
+	personModel "github.com/joaosoft/clean-architecture/models/person"
 	"net/http"
 	"net/http/httptest"
 	"testing"

@@ -1,15 +1,15 @@
 package http
 
 import (
-	routes "clean-architecture/api/http"
-	"clean-architecture/infrastructure/config"
-	"clean-architecture/infrastructure/domain/app"
-	configDomain "clean-architecture/infrastructure/domain/config"
-	httpDomain "clean-architecture/infrastructure/domain/http"
-	"clean-architecture/infrastructure/domain/logger"
 	"context"
 	"database/sql"
 	"fmt"
+	routes "github.com/joaosoft/clean-architecture/api/http"
+	"github.com/joaosoft/clean-architecture/infrastructure/config"
+	"github.com/joaosoft/clean-architecture/infrastructure/domain/app"
+	configDomain "github.com/joaosoft/clean-architecture/infrastructure/domain/config"
+	httpDomain "github.com/joaosoft/clean-architecture/infrastructure/domain/http"
+	"github.com/joaosoft/clean-architecture/infrastructure/domain/logger"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

@@ -1,12 +1,12 @@
 package main
 
 import (
-	controllers "clean-architecture/controllers/http/person"
-	appHttp "clean-architecture/infrastructure/app/http"
-	"clean-architecture/infrastructure/config/viper"
-	"clean-architecture/infrastructure/database/postgres"
-	models "clean-architecture/models/person"
-	repositories "clean-architecture/repositories/person"
+	controllers "github.com/joaosoft/clean-architecture/controllers/http/person"
+	appHttp "github.com/joaosoft/clean-architecture/infrastructure/app/http"
+	"github.com/joaosoft/clean-architecture/infrastructure/config/viper"
+	"github.com/joaosoft/clean-architecture/infrastructure/database/postgres"
+	models "github.com/joaosoft/clean-architecture/models/person"
+	repositories "github.com/joaosoft/clean-architecture/repositories/person"
 	"log"
 )
 

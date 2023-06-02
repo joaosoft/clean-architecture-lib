@@ -1,8 +1,8 @@
 package person
 
 import (
-	personDomain "clean-architecture/domain/person"
 	"context"
+	personDomain "github.com/joaosoft/clean-architecture/domain/person"
 
 	"github.com/stretchr/testify/mock"
 )

@@ -1,7 +1,7 @@
 package viper
 
 import (
-	"clean-architecture/infrastructure/config"
+	"github.com/joaosoft/clean-architecture/infrastructure/config"
 
 	"github.com/spf13/viper"
 )

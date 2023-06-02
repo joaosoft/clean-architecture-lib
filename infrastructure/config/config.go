@@ -1,8 +1,8 @@
 package config
 
 import (
-	"clean-architecture/infrastructure/app"
-	"clean-architecture/infrastructure/database"
+	"github.com/joaosoft/clean-architecture/infrastructure/app"
+	"github.com/joaosoft/clean-architecture/infrastructure/database"
 )
 
 type Config struct {

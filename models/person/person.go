@@ -1,10 +1,10 @@
 package person
 
 import (
-	personDomain "clean-architecture/domain/person"
-	appDomain "clean-architecture/infrastructure/domain/app"
 	"context"
 	"fmt"
+	personDomain "github.com/joaosoft/clean-architecture/domain/person"
+	appDomain "github.com/joaosoft/clean-architecture/infrastructure/domain/app"
 )
 
 type PersonModel struct {

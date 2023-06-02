@@ -1,11 +1,11 @@
 package app
 
 import (
-	configImpl "clean-architecture/infrastructure/config"
-	"clean-architecture/infrastructure/domain/config"
-	httpController "clean-architecture/infrastructure/domain/http"
-	"clean-architecture/infrastructure/domain/logger"
 	"database/sql"
+	configImpl "github.com/joaosoft/clean-architecture/infrastructure/config"
+	"github.com/joaosoft/clean-architecture/infrastructure/domain/config"
+	httpController "github.com/joaosoft/clean-architecture/infrastructure/domain/http"
+	"github.com/joaosoft/clean-architecture/infrastructure/domain/logger"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

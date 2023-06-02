@@ -1,10 +1,10 @@
 package v1
 
 import (
-	"clean-architecture/controllers/http/middlewares"
-	"clean-architecture/controllers/http/person"
-	"clean-architecture/infrastructure/domain/app"
-	httpDomain "clean-architecture/infrastructure/domain/http"
+	"github.com/joaosoft/clean-architecture/controllers/http/middlewares"
+	"github.com/joaosoft/clean-architecture/controllers/http/person"
+	"github.com/joaosoft/clean-architecture/infrastructure/domain/app"
+	httpDomain "github.com/joaosoft/clean-architecture/infrastructure/domain/http"
 	"net/http"
 )
 
