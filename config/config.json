@@ -1,9 +1,0 @@
-{
-  "http": {
-    "port": "8081"
-  },
-  "database": {
-    "driver": "postgres",
-    "data_source": "postgres://foursource:password@localhost:5432?sslmode=disable"
-  }
-}
