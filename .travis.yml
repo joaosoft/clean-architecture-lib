@@ -12,10 +12,13 @@ jobs:
       os: linux
       go: master
       script:
-        - go build ./
-        - go test ./
-        - go test -coverprofile=coverage.txt -covermode=atomic ./
-        - go test ./ -bench=. -cpu=1,2,4,8
+        - go test ./logger/joaosoft/
+        - go test ./logger/vredens/
+        - go test -coverprofile=coverage.txt -covermode=atomic ./logger/joaosoft/
+        - go test -coverprofile=coverage.txt -covermode=atomic ./logger/vredens/
+        - go test ./logger/joaosoft/ -bench=. -cpu=1,2,4,8
+        - go test ./logger/vredens/ -bench=. -cpu=1,2,4,8
+
 
       after_success:
         - bash <(curl -s https://codecov.io/bash)
